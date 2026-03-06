@@ -1,6 +1,8 @@
 # Kiln Codex
 
-> "A forge is where vague ambition goes to lose its excuses."
+> "La vraie générosité envers l’avenir consiste à tout donner au présent."
+>
+> Albert Camus
 
 *An autonomous software foundry for Codex CLI, with Claude as optional philosophical backup and occasional professional heckler.*
 
