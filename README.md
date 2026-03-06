@@ -1,101 +1,117 @@
-# Kiln Codex
+# Kiln GPT
 
 > "You never change things by fighting the existing reality. To change something, build a new model that makes the existing model obsolete."
 >
 > R. Buckminster Fuller
 
-*An autonomous software foundry for Codex CLI, with Claude as optional philosophical backup and occasional professional heckler.*
+<p align="center">
+  <strong>Context-driven software delivery for Codex CLI.</strong><br>
+  Brainstorm hard. Plan clearly. Implement just in time. Verify brutally.
+</p>
 
-Software kiln, this is. Ceramics kiln, this is not. Fire code into shape, it does.
+<p align="center">
+  <code>brainstorm → spec → plan → implement → verify → deploy → report</code>
+</p>
 
-The short version: Kiln Codex turns a vague product idea into a disciplined delivery run.
+Kiln GPT is an autonomous software foundry for people who like velocity but do not enjoy chaos dressed up as autonomy.
 
-First you brainstorm properly. Not fake brainstorming. Not "tell me your vibe." Actual structured ideation with the BMAD module, depth control, elicitation methods, and a durable vision artifact.
+It starts with a real brainstorm. Then it turns intent into durable artifacts. Then it drives phase-scoped implementation with review, validation, deployment, and final reporting. Codex is the primary runtime. Claude is optional backup for adversarial planning, debate, and review. The run state lives on disk. The workers stay lean. The project memory survives.
 
-Then the system plans, debates, synthesizes, implements, reviews, validates, deploys, and reports. Codex is the operating system. Claude is a sidecar brain when you want a second set of eyes with a different temperament. The run lives on disk. The workers are disposable. The truth survives.
+This is not a chat gimmick. It is a workflow engine with taste.
 
-## Why This Exists
+## Why Kiln GPT Exists
 
-Because most "agentic coding" setups have the memory discipline of a sleep-deprived raccoon.
+Most AI coding workflows have one of two problems:
 
-They start strong, accumulate context like a hoarder with a token budget, forget what mattered, and eventually become extremely confident wrong machines. Spectacular. Cinematic. Useless.
+1. They improvise too much.
+2. They remember too little.
 
-Kiln takes the opposite approach:
+You ask for a feature. The agent charges forward. Twenty minutes later you have code, uncertainty, missing tests, weak documentation, and a faint smell of future regret.
 
-- put the run state on disk
-- keep context packs narrow
-- separate brainstorm from planning
-- separate planning from implementation
-- separate implementation from review
-- separate review from validation
-- force deployment and reporting to exist in reality, not in aspiration
+Kiln GPT takes the opposite path:
 
-This is not a swarm. It is not a vibe. It is not "autonomy" by means of letting one giant chat hallucinate project management. It is a build system with memory, stage discipline, and a taste for receipts.
+- formalize intent before implementation
+- move critical context into versionable artifacts
+- break complex work into explicit units
+- implement only the current slice
+- verify against the plan, not just the diff
+- keep a durable handoff trail for resume, review, and deployment
 
-## What It Feels Like
+That is the product. Not "AI writes code." Plenty of things do that. Kiln GPT is about making that behavior coherent across an entire delivery run.
 
-Imagine if:
+## What Makes It Different
 
-- Yoda cared about context windows
-- Rick Sanchez had to pass review
-- Sheldon Cooper was banned from forgetting deployment
+Kiln GPT is built around four ideas.
 
-That is roughly the tone. Direct, strange, occasionally theatrical, but never condescending and never decorative for its own sake.
+### 1. Brainstorm First
 
-## What Was Preserved From Original Kiln
+The brainstorm is not warm-up theater. It is the ignition sequence.
 
-The important parts. The parts with teeth.
+`kiln fire` launches an interactive Codex session backed by the BMAD-derived brainstorm module:
 
-- brainstorm first, always
-- durable project memory
-- distinct planning, execution, review, validation, and reporting stages
-- adversarial or semi-adversarial plan improvement
-- just-in-time implementation instead of giant speculative coding passes
-- correction loops when validation fails
-- a narrative shell with actual taste instead of flat corporate sludge
+- 62 brainstorming techniques
+- 50 elicitation methods
+- depth control: `light`, `standard`, `deep`
+- style control: `express`, `tour`
+- durable output to `vision.md`
 
-The host runtime changed. The core philosophy did not.
+The goal is simple: turn a vague ambition into a brief that can survive contact with implementation.
 
-Claude is no longer the machine that contains the whole world. Codex is the primary runtime now. Claude helps when disagreement, synthesis, or review pressure is useful.
+### 2. Context Is A File, Not A Feeling
 
-## The Brainstorm Is Not Cosmetic
+Kiln GPT moves project awareness out of ephemeral chat and into durable run artifacts:
 
-This is the part I cared about preserving, because it is the difference between "agent writes some code" and "system understands the mission."
+- `state.json` for machine state
+- `STATE.md` for human state
+- `docs/*.md` for vision, architecture, decisions, patterns, pitfalls, deployment
+- `prompts/*.md` for explicit worker context packs
+- `reviews/` and `validation/` for proof, findings, and iteration loops
 
-`kiln fire` launches an interactive Codex brainstorm session backed by:
+The model should not be forced to remember your project by sheer conversational endurance. That is not intelligence. That is stress.
 
-- the BMAD-derived brainstorm facilitator
-- the full 62-technique catalog
-- the full 50-method elicitation catalog
-- depth selection: `light`, `standard`, `deep`
-- style selection: `express`, `tour`
-- a durable `vision.md` artifact that planning must obey
+### 3. Just-In-Time Iteration
 
-What the brainstorm is supposed to do:
+This is the part you were right to push on.
 
-- extract the real problem
-- clarify the user
-- force explicit goals and non-goals
-- surface constraints before they become landmines
-- define success criteria
-- expose risks, unknowns, and deployment expectations
-- leave behind a vision document that is good enough to build from
+Kiln GPT is not supposed to front-load everything into one monolithic plan and then drift through implementation on vibes. The intended shape is:
 
-What it is not supposed to do:
+- define the overall direction
+- lock the current unit of work
+- sharpen context for that unit
+- implement only that unit
+- verify against plan, guidelines, and tests
+- iterate immediately on findings
+- then move forward
 
-- invent your ideas for you
-- fake missing answers
-- jump into architecture before the product is legible
-- write inspirational fog
+In other words: the runtime should think in tracks and phases, not in giant wishful blobs.
 
-The assets live here:
+The useful lesson from Google Conductor is not "copy Gemini." It is this:
 
-- [agents/brainstorm.md](/DEV/kilngpt/agents/brainstorm.md)
-- [references/brainstorm-playbook.md](/DEV/kilngpt/references/brainstorm-playbook.md)
-- [references/data/brainstorming-techniques.json](/DEV/kilngpt/references/data/brainstorming-techniques.json)
-- [references/data/elicitation-methods.json](/DEV/kilngpt/references/data/elicitation-methods.json)
+- persistent specs beat ephemeral chat
+- tracks create momentum without losing control
+- verification must be a first-class stage
 
-## The Runtime Shape
+That design pressure is now reflected in Kiln GPT’s runtime itself:
+
+- before each phase, Kiln GPT generates an active-slice spec
+- implementation sees that spec, not just the whole master plan
+- after approval, Kiln GPT writes a phase verify artifact
+
+So the JIT loop is not just explained. It is encoded.
+
+### 4. Verification Is Not Optional
+
+Implementation is only half the story. Kiln GPT closes the loop with review, validation, deployment, and reporting:
+
+- native `codex review`
+- optional Claude review sidecar
+- validation against plan and test results
+- deployment pass for the real product path
+- final delivery summary with residual risk
+
+If the code exists but the proof does not, the run is not done.
+
+## How The Workflow Works
 
 ```text
 brainstorm -> plan -> execute -> validate -> deploy -> report -> complete
@@ -103,103 +119,108 @@ brainstorm -> plan -> execute -> validate -> deploy -> report -> complete
 
 ### Brainstorm
 
-Interactive Codex session. Human and facilitator do the hard thinking up front. Output goes to:
+Interactive, operator-facing, high-signal.
 
-```text
-.kiln/runs/<run_id>/docs/vision.md
-```
+This stage produces:
 
-When the vision is ready:
+- `.kiln/runs/<run_id>/docs/vision.md`
 
-```bash
-kiln resume --stage plan --auto
-```
+That document is the source of intent for everything downstream.
 
 ### Plan
 
-Now the ideas go on trial.
+Planning converts the brainstorm into an implementation shape.
 
-- Codex creates the primary structured plan
-- Claude can produce an independent competing plan
-- Claude can debate the two plans and expose weak assumptions
-- Codex synthesizes the surviving parts into the master plan
+The current runtime supports:
 
-Result:
+- Codex planning as the primary pass
+- optional Claude counter-plan
+- optional Claude debate
+- Codex synthesis into a master plan
+
+Outputs land in:
 
 - `.kiln/runs/<run_id>/outputs/master-plan.json`
 - `.kiln/runs/<run_id>/docs/master-plan.md`
 
 ### Execute
 
-Codex implements one phase at a time. Not because the machine is timid. Because sequencing is real and giant speculative edits are how software acquires trauma.
+Execution is phase-scoped and deliberately narrow.
 
-Each phase is:
+Each phase should be:
 
-- bounded
-- implemented
-- reviewed
-- corrected if needed
-- committed
-- merged only after it earns it
+- understandable
+- reviewable
+- testable
+- reversible
+
+Before implementation, Kiln GPT writes:
+
+- `plans/<phase-id>-slice.json`
+- `plans/<phase-id>-slice.md`
+
+Those artifacts define the active objective, scope boundaries, file focus, dependencies, and verification checklist for the current slice.
+
+The worker then gets only that active slice plus a small support bundle, not the whole novel.
 
 ### Validate
 
-Validation checks the actual system, not the story you tell yourself about the diff.
+Validation checks the actual product, not the emotional truth of the patch.
 
-That means:
+That includes:
 
-- build
-- test
-- inspect behavior
-- drive end-to-end flows when needed
-- report missing credentials or infra instead of pretending
-
-If validation fails, the system loops back through correction rather than declaring spiritual victory.
+- build and test execution
+- behavioral checks
+- end-to-end flows when required
+- explicit reporting of missing credentials or deployment blockers
 
 ### Deploy
 
-A final worker performs the safest real deployment path the project exposes and verifies a smoke path. No poetry. No PowerPoint. A real deployment attempt.
+Kiln GPT attempts the safest real deployment path exposed by the repo and verifies a smoke path afterward.
 
 ### Report
 
-At the end, Kiln writes an operator handoff with:
+The final stage writes the handoff:
 
 - what changed
 - what passed
-- what remains risky
-- what should happen next
+- what failed
+- what still needs attention
 
-## How It Is Designed
+## Just-In-Time Delivery Model
 
-This is the architectural bet:
+Kiln GPT should be read as a context-driven delivery system.
 
-- workers should be stateless
-- runs should be stateful
+The ideal cycle for meaningful work is:
 
-So the runtime keeps its memory in files instead of in one endlessly bloated conversation:
+1. Establish product context.
+2. Generate or refine a spec for the active slice.
+3. Turn that slice into a concrete plan.
+4. Implement only the next approved unit.
+5. Run verification and review.
+6. Feed findings back into the next iteration immediately.
 
-- `state.json` for machine state
-- `STATE.md` for human state
-- `docs/*.md` for durable memory
-- `prompts/*.md` for explicit context packs
-- `reviews/` for quality gates
-- `validation/` for proof, failure, and correction artifacts
+That is the heartbeat of the product.
 
-This matters more than it sounds. It means a long project can stay coherent because every worker starts from curated truth, not inherited confusion.
+If Kiln GPT ever looks like "brainstorm once, then code for hours with vague oversight," that is a presentation failure, not the intent of the system.
 
-## Lore, Because Style Matters
+The runtime now makes that visible with:
 
-Yes, the narrative layer is integrated on purpose.
+- phase slice specs in `plans/`
+- implementation outputs in `outputs/`
+- verify artifacts in `validation/`
 
-Kiln has lore and stage flavor because sterile tooling is forgettable and chaotic tooling is exhausting. The right amount of theater makes a system easier to use, easier to trust, and frankly more fun to live inside for long runs.
+## What You Actually Get
 
-That layer now lives in:
+When you run Kiln GPT, you get:
 
-- [references/data/lore.json](/DEV/kilngpt/references/data/lore.json)
-- [references/data/spinner-verbs.json](/DEV/kilngpt/references/data/spinner-verbs.json)
-- [src/lib/lore.js](/DEV/kilngpt/src/lib/lore.js)
-
-So yes, the forge talks back a little. Tastefully. Usually.
+- a durable `.kiln/` runtime per project
+- a structured brainstorm instead of shallow requirement cosplay
+- Codex-native execution
+- optional multi-model pressure where it matters
+- resumable runs
+- visible artifacts
+- a workflow that treats review and validation as part of implementation, not cleanup afterward
 
 ## Commands
 
@@ -218,26 +239,39 @@ kiln reset
 npm install -g .
 ```
 
-## What To Expect
+## Repository Map
 
-Expect:
+| Path | Purpose |
+|---|---|
+| `src/lib/workflow.js` | Top-level runtime orchestration |
+| `src/lib/state.js` | Durable run state and artifact management |
+| `src/lib/prompts.js` | Context-pack generation for each stage |
+| `src/lib/adapters.js` | Codex and Claude CLI adapters |
+| `src/lib/lore.js` | Narrative layer and stage flavor |
+| `agents/brainstorm.md` | Brainstorm facilitator contract |
+| `references/data/brainstorming-techniques.json` | BMAD brainstorm catalog |
+| `references/data/elicitation-methods.json` | BMAD elicitation catalog |
 
-- a strong brainstorm instead of shallow requirement cosplay
-- structured autonomy after the brainstorm
-- explicit artifacts under `.kiln/`
-- blunt review when work is weak
-- durable resume semantics
-- a system that cares whether the thing actually works
+## Tone, By Design
 
-Do not expect:
+Kiln GPT is stylish on purpose.
 
-- magic from vague prompts
-- blind guessing in ambiguous situations
-- one-shot perfection in every codebase
-- a fake "fully autonomous" demo that quietly relies on human memory and denial
+Not because the README needed personality surgery. Because tools that ask for long sessions deserve a point of view. The forge voice, the lore, the stage language, the slightly dangerous confidence: all of that is part of making the workflow memorable without making it unserious.
+
+The standard is simple:
+
+- sharp, not smug
+- theatrical, not cringe
+- opinionated, not patronizing
 
 ## Current State
 
-The runtime is real, tested, and pushed. The BMAD brainstorm assets are integrated. The lore is integrated. The control plane is Codex-native. Claude is optional and useful, not structural.
+Kiln GPT is already a real Codex-native runtime with:
 
-There is still room to widen specialized planners, framework-aware deploy adapters, and deeper validation profiles. Good. A foundry should evolve. If it were "finished," I would immediately distrust it.
+- BMAD brainstorm assets integrated
+- durable `.kiln` state
+- active-slice JIT specs per phase
+- per-phase verify artifacts
+- planning, execution, validation, deployment, and reporting stages
+- local tests passing
+- pushed `main`

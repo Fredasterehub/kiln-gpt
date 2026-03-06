@@ -27,7 +27,7 @@ Canonical memory:
 
 1. Brainstorm is interactive and must complete before autonomous stages start.
 2. Planning must produce structured phases with verification and deployment intent.
-3. Execution is phase-by-phase and review-gated.
+3. Execution is phase-by-phase, review-gated, and driven by per-phase active-slice specs.
 4. Validation must test the product, not just the diff.
 5. Deployment must use the repo's real deployment path.
 6. Reporting must summarize outcomes and residual risk.

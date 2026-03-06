@@ -32,6 +32,33 @@ const PLAN_SCHEMA = {
   },
 };
 
+const ACTIVE_SLICE_SCHEMA = {
+  type: "object",
+  additionalProperties: false,
+  required: [
+    "phaseId",
+    "objective",
+    "scopeIn",
+    "scopeOut",
+    "constraints",
+    "filesToInspect",
+    "verificationChecklist",
+    "dependencies",
+    "sliceMarkdown",
+  ],
+  properties: {
+    phaseId: { type: "string" },
+    objective: { type: "string" },
+    scopeIn: { type: "array", items: { type: "string" } },
+    scopeOut: { type: "array", items: { type: "string" } },
+    constraints: { type: "array", items: { type: "string" } },
+    filesToInspect: { type: "array", items: { type: "string" } },
+    verificationChecklist: { type: "array", items: { type: "string" } },
+    dependencies: { type: "array", items: { type: "string" } },
+    sliceMarkdown: { type: "string" },
+  },
+};
+
 const DEBATE_SCHEMA = {
   type: "object",
   additionalProperties: false,
@@ -99,6 +126,7 @@ const REPORT_SCHEMA = {
 };
 
 module.exports = {
+  ACTIVE_SLICE_SCHEMA,
   DEBATE_SCHEMA,
   GATE_SCHEMA,
   IMPLEMENTATION_SCHEMA,

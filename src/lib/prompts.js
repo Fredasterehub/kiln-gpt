@@ -112,6 +112,25 @@ function buildImplementationPrompt(projectRoot, run, phase, supportDocs) {
   ].join("\n");
 }
 
+function buildActiveSlicePrompt(projectRoot, run, phase, supportDocs) {
+  return [
+    readAgentSpec(projectRoot, "planner-codex"),
+    "",
+    contextBlock("Run State", JSON.stringify(run.state, null, 2)),
+    contextBlock("Phase", JSON.stringify(phase, null, 2)),
+    contextBlock("Support Docs", supportDocs),
+    contextBlock(
+      "Output Contract",
+      [
+        "Return only structured data matching the provided schema.",
+        "This is a just-in-time active slice spec for implementation, not a full project plan.",
+        "Make scope boundaries explicit.",
+        "Produce a concrete verification checklist for this phase only.",
+      ].join("\n"),
+    ),
+  ].join("\n");
+}
+
 function buildCorrectionPrompt(projectRoot, run, phase, reviewPayload) {
   return [
     readAgentSpec(projectRoot, "optimizer"),
@@ -191,6 +210,7 @@ function persistPrompt(promptPath, promptText) {
 }
 
 module.exports = {
+  buildActiveSlicePrompt,
   buildBrainstormPrompt,
   buildClaudeReviewPrompt,
   buildCorrectionPrompt,

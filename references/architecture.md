@@ -42,3 +42,16 @@ Claude is optional:
 All durable state lives under `.kiln/runs/<run_id>/`.
 
 That makes the system resumable without betting on a single long conversation.
+
+## Just-In-Time Iteration
+
+Execution is intentionally context-driven.
+
+For each implementation phase, the runtime creates:
+
+1. an active-slice spec
+2. an implementation pass scoped to that slice
+3. a review and correction loop
+4. a verify artifact before merge
+
+This keeps work bounded and makes progress legible.

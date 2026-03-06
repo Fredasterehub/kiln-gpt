@@ -3,7 +3,7 @@
 const path = require("node:path");
 
 const { cliAvailable, launchCodexInteractive, runClaudePrint, runCodexExec, runCodexReview, runGit } = require("./adapters");
-const { DEBATE_SCHEMA, GATE_SCHEMA, IMPLEMENTATION_SCHEMA, PLAN_SCHEMA, REPORT_SCHEMA, REVIEW_SCHEMA } = require("./schemas");
+const { ACTIVE_SLICE_SCHEMA, DEBATE_SCHEMA, GATE_SCHEMA, IMPLEMENTATION_SCHEMA, PLAN_SCHEMA, REPORT_SCHEMA, REVIEW_SCHEMA } = require("./schemas");
 const {
   appendEvent,
   ensureProjectInitialized,
@@ -18,6 +18,7 @@ const {
 } = require("./state");
 const {
   buildBrainstormPrompt,
+  buildActiveSlicePrompt,
   buildClaudeReviewPrompt,
   buildCorrectionPrompt,
   buildDebatePrompt,
@@ -227,18 +228,39 @@ async function runExecutionStage(projectRoot, run, config) {
     }));
 
     const branchName = checkoutPhaseBranch(projectRoot, baseBranch, phase);
-    const prompt = buildImplementationPrompt(projectRoot, loadCurrentRun(projectRoot), phase, supportDocs(loadCurrentRun(projectRoot)));
-    savePrompt(loadCurrentRun(projectRoot), `execute-${phase.id}`, prompt);
-    runCodexExec({
+    const currentRun = loadCurrentRun(projectRoot);
+    const docsBundle = supportDocs(currentRun);
+    const slicePrompt = buildActiveSlicePrompt(projectRoot, currentRun, phase, docsBundle);
+    savePrompt(currentRun, `slice-${phase.id}`, slicePrompt);
+    const activeSlice = runCodexExec({
+      name: `slice-${phase.id}`,
+      model: config.host.planningModel,
+      prompt: slicePrompt,
+      schema: ACTIVE_SLICE_SCHEMA,
+      workdir: projectRoot,
+      timeoutSeconds: config.execution.codexTimeoutSeconds,
+      tmpDir: currentRun.paths.tmpDir,
+      enableMultiAgent: config.host.enableMultiAgent,
+    });
+    writeArtifact(currentRun, `plans/${phase.id}-slice.json`, activeSlice);
+    writeArtifact(currentRun, `plans/${phase.id}-slice.md`, activeSlice.sliceMarkdown);
+
+    const prompt = buildImplementationPrompt(projectRoot, currentRun, {
+      ...phase,
+      activeSlice,
+    }, docsBundle);
+    savePrompt(currentRun, `execute-${phase.id}`, prompt);
+    const implementation = runCodexExec({
       name: `implement-${phase.id}`,
       model: config.host.implementationModel,
       prompt,
       schema: IMPLEMENTATION_SCHEMA,
       workdir: projectRoot,
       timeoutSeconds: config.execution.codexTimeoutSeconds,
-      tmpDir: loadCurrentRun(projectRoot).paths.tmpDir,
+      tmpDir: currentRun.paths.tmpDir,
       enableMultiAgent: config.host.enableMultiAgent,
     });
+    writeArtifact(currentRun, `outputs/${phase.id}-implementation.json`, implementation);
 
     let approved = false;
     for (let round = 1; round <= config.execution.qaRounds; round += 1) {
@@ -277,7 +299,7 @@ async function runExecutionStage(projectRoot, run, config) {
 
       const correctionPrompt = buildCorrectionPrompt(projectRoot, currentRun, phase, review);
       savePrompt(currentRun, `fix-${phase.id}-round-${round}`, correctionPrompt);
-      runCodexExec({
+      const fix = runCodexExec({
         name: `fix-${phase.id}-round-${round}`,
         model: config.host.implementationModel,
         prompt: correctionPrompt,
@@ -287,11 +309,35 @@ async function runExecutionStage(projectRoot, run, config) {
         tmpDir: currentRun.paths.tmpDir,
         enableMultiAgent: config.host.enableMultiAgent,
       });
+      writeArtifact(currentRun, `outputs/${phase.id}-fix-round-${round}.json`, fix);
     }
 
     if (!approved) {
       throw new Error(`Phase ${phase.id} failed review after ${config.execution.qaRounds} rounds.`);
     }
+
+    const verifyArtifact = [
+      `# Verify ${phase.id}`,
+      "",
+      `## Objective`,
+      "",
+      activeSlice.objective,
+      "",
+      "## Verification Checklist",
+      "",
+      ...activeSlice.verificationChecklist.map((item) => `- ${item}`),
+      "",
+      "## Review Evidence",
+      "",
+      `- Native Codex review executed`,
+      `- Claude approval gate ${config.claude.enabled && cliAvailable("claude") ? "executed" : "skipped"}`,
+      "",
+      "## Status",
+      "",
+      "- Phase approved for merge.",
+      "",
+    ].join("\n");
+    writeArtifact(loadCurrentRun(projectRoot), `validation/${phase.id}-verify.md`, verifyArtifact);
 
     maybeCommitPhase(projectRoot, phase);
     mergePhaseBranch(projectRoot, baseBranch, branchName);
