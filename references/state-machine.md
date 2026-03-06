@@ -1,45 +1,17 @@
-# Kiln GPT State Machine
-
-Canonical lifecycle:
+# State Machine
 
 ```text
-BOOTSTRAP
-  -> INIT
-  -> MAP
-  -> BRAINSTORM
-  -> RESEARCH
-  -> ARCHITECT
-  -> BUILD_PLAN[n]
-  -> BUILD_EXECUTE[n]
-  -> BUILD_REVIEW[n]
-  -> VALIDATE
-  -> REPORT
-  -> COMPLETE
+brainstorm -> plan -> execute -> validate -> deploy -> report -> complete
 ```
 
-Exceptional states:
+Transitions are file-driven:
 
-- `PAUSED`
-- `FAILED`
-- `ABORTED`
+- `state.json` stores the machine stage
+- prompt packs are persisted before every worker call
+- events are appended to `events.jsonl`
 
-## Transition Rules
+Failure handling:
 
-- `INIT` creates run state and classifies the project.
-- `MAP` runs only for brownfield projects.
-- `BRAINSTORM` is the only operator-interactive stage by default.
-- `BUILD_*` repeats per master-plan phase.
-- `PAUSED`, `FAILED`, and `ABORTED` are resumable if the run files remain intact.
-- `COMPLETE` is not resumable.
-
-## Resume Rules
-
-`kiln-resume` may continue only if:
-
-- `.kiln/current-run.txt` points to a real run
-- `STATE.md` exists
-- status is `PAUSED`, `FAILED`, or `ABORTED`
-
-If status is `COMPLETE`, advise a new run.
-If status is an active in-flight state, verify whether the operator wants to
-continue with `kiln-fire` rather than forcing a resume flow.
+- phase review failure blocks execution
+- validation failure enters a correction loop
+- deployment failure stops before report

@@ -1,0 +1,22 @@
+{
+  "name": "kiln-codex",
+  "version": "0.1.0",
+  "description": "Codex-native Kiln runtime with optional Claude sidecars",
+  "bin": {
+    "kiln": "./bin/kiln.js"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "codex",
+    "claude",
+    "orchestration",
+    "agent-runtime",
+    "workflow"
+  ],
+  "license": "MIT"
+}

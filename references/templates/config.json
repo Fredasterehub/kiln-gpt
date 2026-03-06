@@ -1,23 +1,25 @@
 {
-  "version": 1,
-  "project_name": "{{PROJECT_NAME}}",
-  "operator": {
-    "style": "fast-direct",
-    "advanced_controls": false
+  "runtimeVersion": 1,
+  "host": {
+    "primary": "codex",
+    "brainstormModel": "gpt-5.4",
+    "planningModel": "gpt-5.2",
+    "synthesisModel": "gpt-5.4",
+    "implementationModel": "gpt-5-codex",
+    "validationModel": "gpt-5.4",
+    "enableMultiAgent": true
   },
-  "defaults": {
-    "brainstorm_depth": "balanced",
-    "debate_rigor": "focused",
-    "gate_profile": "vision-only",
-    "execution_mode": "auto",
-    "validation_posture": "local-first"
+  "claude": {
+    "enabled": true,
+    "planningModel": "opus",
+    "debateModel": "opus",
+    "reviewModel": "opus"
   },
-  "bridges": {
-    "planning_command": null,
-    "codex_command": "codex"
-  },
-  "memory": {
-    "mirror_soft_preferences": true,
-    "last_synced_at": null
+  "execution": {
+    "qaRounds": 3,
+    "correctionCycles": 3,
+    "codexTimeoutSeconds": 900,
+    "claudeTimeoutSeconds": 900,
+    "defaultBranch": "main"
   }
 }

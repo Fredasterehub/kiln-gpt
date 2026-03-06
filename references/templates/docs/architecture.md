@@ -1,21 +1,3 @@
 # Architecture
 
-## System Shape
-
-TBD
-
-## Major Components
-
-TBD
-
-## Data And State
-
-TBD
-
-## Integration Boundaries
-
-TBD
-
-## Risks
-
-TBD
+Replace this file with the evolving technical shape of the project.

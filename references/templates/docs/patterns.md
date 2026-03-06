@@ -1,13 +1,3 @@
 # Patterns
 
-## Preferred Patterns
-
-TBD
-
-## Review Standards
-
-TBD
-
-## Test Expectations
-
-TBD
+Append durable coding or architecture patterns discovered during execution.

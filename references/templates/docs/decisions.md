@@ -1,7 +1,3 @@
 # Decisions
 
-## Decision Log
-
-| Date | Decision | Why | Owner |
-|---|---|---|---|
-| TBD | TBD | TBD | Architect |
+Append key decisions and why they were taken.
