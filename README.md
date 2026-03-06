@@ -1,145 +1,201 @@
 # Kiln Codex
 
-Software kiln, this is. Pottery kiln, absolutely not.
+*An autonomous software foundry for Codex CLI, with Claude as optional philosophical backup and occasional professional heckler.*
 
-This project is a Codex-native rebuild of the original Kiln workflow: big interactive brainstorm first, then autonomous planning, implementation, review, validation, deployment, and final handoff. Think Yoda with a debugger, Rick with slightly better file hygiene, and Sheldon if he were forced to respect operational reality. Precise, opinionated, mildly theatrical, and built to ship code instead of merely having feelings about architecture.
+Software kiln, this is. Ceramics kiln, this is not. Fire code into shape, it does.
 
-## What This Thing Actually Is
+The short version: Kiln Codex turns a vague product idea into a disciplined delivery run.
 
-Kiln Codex is a local runtime for multi-stage software delivery.
+First you brainstorm properly. Not fake brainstorming. Not "tell me your vibe." Actual structured ideation with the BMAD module, depth control, elicitation methods, and a durable vision artifact.
 
-It does not pretend one giant model conversation should remember everything forever. That way madness lies. Also token waste. Instead it keeps durable run state on disk, generates narrow prompt packs for each worker, and uses the native CLIs as execution surfaces:
+Then the system plans, debates, synthesizes, implements, reviews, validates, deploys, and reports. Codex is the operating system. Claude is a sidecar brain when you want a second set of eyes with a different temperament. The run lives on disk. The workers are disposable. The truth survives.
 
-- `codex` is the host runtime
-- `claude` is an optional sidecar for independent planning, debate, and review
-- `.kiln/` is the source of truth for the run
+## Why This Exists
 
-If you want the short version:
+Because most "agentic coding" setups have the memory discipline of a sleep-deprived raccoon.
 
-- brainstorm with Codex interactively
-- let Codex and Claude argue over the plan
-- let Codex implement just-in-time
-- let review and validation keep it honest
-- let deployment and reporting close the loop
+They start strong, accumulate context like a hoarder with a token budget, forget what mattered, and eventually become extremely confident wrong machines. Spectacular. Cinematic. Useless.
 
-## What Was Preserved From The Original Kiln
+Kiln takes the opposite approach:
 
-Yes, the brainstorm matters here. A lot.
+- put the run state on disk
+- keep context packs narrow
+- separate brainstorm from planning
+- separate planning from implementation
+- separate implementation from review
+- separate review from validation
+- force deployment and reporting to exist in reality, not in aspiration
 
-The rebuild now preserves the original spirit on purpose:
+This is not a swarm. It is not a vibe. It is not "autonomy" by means of letting one giant chat hallucinate project management. It is a build system with memory, stage discipline, and a taste for receipts.
 
-- an explicit brainstorm-first workflow
-- durable vision capture before planning begins
-- the BMAD-origin brainstorm module and its professional-grade JSON catalogs
-- a richer brainstorm playbook with depth and style selection
-- targeted ideation techniques instead of generic "tell me more" sludge
-- planner debate, synthesis, review gates, and correction loops
-- end-to-end validation and deployment as first-class stages
+## What It Feels Like
 
-The main thing that changed is the host runtime. Claude is no longer the operating system. Codex is.
+Imagine if:
 
-## Brainstorm Experience
+- Yoda cared about context windows
+- Rick Sanchez had to pass review
+- Sheldon Cooper was banned from forgetting deployment
 
-This part is not decorative. It is the ignition sequence.
+That is roughly the tone. Direct, strange, occasionally theatrical, but never condescending and never decorative for its own sake.
 
-`kiln fire` launches an interactive Codex session that now:
+## What Was Preserved From Original Kiln
 
-- asks for brainstorm depth: `light`, `standard`, or `deep`
-- asks for conversation style: `express` or `tour`
-- uses the BMAD-derived brainstorm module instead of improvising into the void
-- loads the full 62-technique catalog and 50-method elicitation catalog from JSON
-- writes the durable result to `.kiln/runs/<run_id>/docs/vision.md`
+The important parts. The parts with teeth.
 
-In plain English: the brainstorm is designed to turn "I have an idea" into "here is a buildable product brief with constraints, success criteria, deployment expectations, and the right unresolved questions."
+- brainstorm first, always
+- durable project memory
+- distinct planning, execution, review, validation, and reporting stages
+- adversarial or semi-adversarial plan improvement
+- just-in-time implementation instead of giant speculative coding passes
+- correction loops when validation fails
+- a narrative shell with actual taste instead of flat corporate sludge
 
-That behavior is grounded in:
+The host runtime changed. The core philosophy did not.
+
+Claude is no longer the machine that contains the whole world. Codex is the primary runtime now. Claude helps when disagreement, synthesis, or review pressure is useful.
+
+## The Brainstorm Is Not Cosmetic
+
+This is the part I cared about preserving, because it is the difference between "agent writes some code" and "system understands the mission."
+
+`kiln fire` launches an interactive Codex brainstorm session backed by:
+
+- the BMAD-derived brainstorm facilitator
+- the full 62-technique catalog
+- the full 50-method elicitation catalog
+- depth selection: `light`, `standard`, `deep`
+- style selection: `express`, `tour`
+- a durable `vision.md` artifact that planning must obey
+
+What the brainstorm is supposed to do:
+
+- extract the real problem
+- clarify the user
+- force explicit goals and non-goals
+- surface constraints before they become landmines
+- define success criteria
+- expose risks, unknowns, and deployment expectations
+- leave behind a vision document that is good enough to build from
+
+What it is not supposed to do:
+
+- invent your ideas for you
+- fake missing answers
+- jump into architecture before the product is legible
+- write inspirational fog
+
+The assets live here:
 
 - [agents/brainstorm.md](/DEV/kilngpt/agents/brainstorm.md)
 - [references/brainstorm-playbook.md](/DEV/kilngpt/references/brainstorm-playbook.md)
 - [references/data/brainstorming-techniques.json](/DEV/kilngpt/references/data/brainstorming-techniques.json)
 - [references/data/elicitation-methods.json](/DEV/kilngpt/references/data/elicitation-methods.json)
-- [references/data/lore.json](/DEV/kilngpt/references/data/lore.json)
-- [references/data/spinner-verbs.json](/DEV/kilngpt/references/data/spinner-verbs.json)
 
-## How It Works
+## The Runtime Shape
 
 ```text
 brainstorm -> plan -> execute -> validate -> deploy -> report -> complete
 ```
 
-### 1. Brainstorm
+### Brainstorm
 
-Interactive Codex session.
+Interactive Codex session. Human and facilitator do the hard thinking up front. Output goes to:
 
-You and the brainstorm agent shape the product until `vision.md` is concrete enough to plan from. When it is done:
+```text
+.kiln/runs/<run_id>/docs/vision.md
+```
+
+When the vision is ready:
 
 ```bash
 kiln resume --stage plan --auto
 ```
 
-### 2. Plan
+### Plan
 
-This is where the models stop being polite and start being useful.
+Now the ideas go on trial.
 
-- Codex produces the primary structured plan
+- Codex creates the primary structured plan
 - Claude can produce an independent competing plan
-- Claude can also debate both plans and expose weak assumptions
-- Codex synthesizes the surviving ideas into the master plan
+- Claude can debate the two plans and expose weak assumptions
+- Codex synthesizes the surviving parts into the master plan
 
-Outputs land in `.kiln/runs/<run_id>/outputs/` and `.kiln/runs/<run_id>/docs/master-plan.md`.
+Result:
 
-### 3. Execute
+- `.kiln/runs/<run_id>/outputs/master-plan.json`
+- `.kiln/runs/<run_id>/docs/master-plan.md`
 
-Codex implements one phase at a time.
+### Execute
 
-Each phase is intentionally bounded, reviewed, corrected if necessary, then merged. No "ship the whole dream in one pass" nonsense. That is how repos become crime scenes.
+Codex implements one phase at a time. Not because the machine is timid. Because sequencing is real and giant speculative edits are how software acquires trauma.
 
-### 4. Validate
+Each phase is:
 
-The runtime validates the actual product, not just the patch.
+- bounded
+- implemented
+- reviewed
+- corrected if needed
+- committed
+- merged only after it earns it
 
-That means build, test, inspect, and when appropriate drive the thing end-to-end with Playwright or the repo's own tooling. If deployment credentials or infrastructure are missing, Kiln reports that explicitly instead of hallucinating competence.
+### Validate
 
-### 5. Deploy
+Validation checks the actual system, not the story you tell yourself about the diff.
 
-One final worker performs the safest real deployment path the repo exposes and verifies a smoke flow.
+That means:
 
-### 6. Report
+- build
+- test
+- inspect behavior
+- drive end-to-end flows when needed
+- report missing credentials or infra instead of pretending
 
-The last stage writes a clean operator handoff with what changed, what passed, what still smells risky, and what to do next.
+If validation fails, the system loops back through correction rather than declaring spiritual victory.
 
-## Why The Design Looks Like This
+### Deploy
 
-Because context rot is real.
+A final worker performs the safest real deployment path the project exposes and verifies a smoke path. No poetry. No PowerPoint. A real deployment attempt.
 
-The original Kiln proved the orchestration idea. The Codex-native rebuild makes the mechanics explicit:
+### Report
 
-- `state.json` is the machine-readable run state
-- `STATE.md` is the human-readable state mirror
-- `docs/*.md` are durable memory artifacts
-- `prompts/*.md` are bounded context packs for workers
-- `reviews/` and `validation/` hold gate evidence
+At the end, Kiln writes an operator handoff with:
 
-Workers are disposable. The run is not.
+- what changed
+- what passed
+- what remains risky
+- what should happen next
 
-This is the key design decision. The system should survive long projects because the truth lives on disk, not because one poor model is desperately trying to remember what happened 40,000 tokens ago.
+## How It Is Designed
 
-## What To Expect
+This is the architectural bet:
 
-Expect this:
+- workers should be stateless
+- runs should be stateful
 
-- a strong brainstorm and a very explicit handoff into planning
-- more structure than a casual coding session
-- less mystery than a "swarm" repo
-- tight artifacts under `.kiln/`
-- blunt review behavior when work is weak
-- resume semantics that make sense
+So the runtime keeps its memory in files instead of in one endlessly bloated conversation:
 
-Do not expect this:
+- `state.json` for machine state
+- `STATE.md` for human state
+- `docs/*.md` for durable memory
+- `prompts/*.md` for explicit context packs
+- `reviews/` for quality gates
+- `validation/` for proof, failure, and correction artifacts
 
-- magic requirements extraction from vague wishes
-- blind autonomous guessing in ambiguous situations
-- one-shot perfection on the first run in every repo on earth
+This matters more than it sounds. It means a long project can stay coherent because every worker starts from curated truth, not inherited confusion.
+
+## Lore, Because Style Matters
+
+Yes, the narrative layer is integrated on purpose.
+
+Kiln has lore and stage flavor because sterile tooling is forgettable and chaotic tooling is exhausting. The right amount of theater makes a system easier to use, easier to trust, and frankly more fun to live inside for long runs.
+
+That layer now lives in:
+
+- [references/data/lore.json](/DEV/kilngpt/references/data/lore.json)
+- [references/data/spinner-verbs.json](/DEV/kilngpt/references/data/spinner-verbs.json)
+- [src/lib/lore.js](/DEV/kilngpt/src/lib/lore.js)
+
+So yes, the forge talks back a little. Tastefully. Usually.
 
 ## Commands
 
@@ -158,16 +214,26 @@ kiln reset
 npm install -g .
 ```
 
-## Runtime Notes
+## What To Expect
 
-- `.kiln/` is ignored by git
-- Codex is required
-- Claude is optional, but useful as a second brain
-- the runtime is deliberately dependency-light
-- this repo is the supervisor; your project repo is the battlefield
+Expect:
+
+- a strong brainstorm instead of shallow requirement cosplay
+- structured autonomy after the brainstorm
+- explicit artifacts under `.kiln/`
+- blunt review when work is weak
+- durable resume semantics
+- a system that cares whether the thing actually works
+
+Do not expect:
+
+- magic from vague prompts
+- blind guessing in ambiguous situations
+- one-shot perfection in every codebase
+- a fake "fully autonomous" demo that quietly relies on human memory and denial
 
 ## Current State
 
-The runtime skeleton is real and tested. The brainstorm layer is now much closer to the original Kiln spirit, but there is still room to widen the technique deck, add more specialized planners, and harden the deployment adapters per framework.
+The runtime is real, tested, and pushed. The BMAD brainstorm assets are integrated. The lore is integrated. The control plane is Codex-native. Claude is optional and useful, not structural.
 
-Reasonable, that is. Finished forever, nothing is.
+There is still room to widen specialized planners, framework-aware deploy adapters, and deeper validation profiles. Good. A foundry should evolve. If it were "finished," I would immediately distrust it.
