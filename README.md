@@ -1,8 +1,8 @@
 # Kiln Codex
 
-> "La vraie générosité envers l’avenir consiste à tout donner au présent."
+> "You never change things by fighting the existing reality. To change something, build a new model that makes the existing model obsolete."
 >
-> Albert Camus
+> R. Buckminster Fuller
 
 *An autonomous software foundry for Codex CLI, with Claude as optional philosophical backup and occasional professional heckler.*
 
