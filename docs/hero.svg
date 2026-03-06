@@ -1,0 +1,68 @@
+<svg width="1600" height="640" viewBox="0 0 1600 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="640" fill="#0D1117"/>
+  <rect width="1600" height="640" fill="url(#bg)"/>
+
+  <g opacity="0.18">
+    <circle cx="1390" cy="110" r="220" fill="#F28C28"/>
+    <circle cx="220" cy="520" r="260" fill="#0E7490"/>
+    <circle cx="1180" cy="540" r="180" fill="#D97706"/>
+  </g>
+
+  <g opacity="0.3">
+    <path d="M0 504C180 438 320 430 452 456C620 489 725 570 884 569C1043 568 1118 479 1286 456C1418 438 1515 463 1600 497V640H0V504Z" fill="url(#ember)"/>
+  </g>
+
+  <g opacity="0.18" stroke="#F6E7C1" stroke-width="1.5">
+    <path d="M88 118H1512"/>
+    <path d="M88 520H1512"/>
+    <path d="M130 88V552"/>
+    <path d="M1470 88V552"/>
+  </g>
+
+  <g opacity="0.18">
+    <path d="M270 140L350 260L270 380L190 260L270 140Z" stroke="#F6E7C1" stroke-width="2"/>
+    <path d="M1330 180L1390 270L1330 360L1270 270L1330 180Z" stroke="#F6E7C1" stroke-width="2"/>
+    <path d="M1160 120L1204 186L1160 252L1116 186L1160 120Z" stroke="#F6E7C1" stroke-width="2"/>
+  </g>
+
+  <g>
+    <rect x="184" y="138" width="202" height="202" rx="36" fill="rgba(246,231,193,0.08)" stroke="#F6E7C1" stroke-width="2"/>
+    <path d="M286 176L328 250H244L286 176Z" fill="#F6E7C1"/>
+    <path d="M286 304C319.137 304 346 277.137 346 244H226C226 277.137 252.863 304 286 304Z" fill="#F28C28"/>
+    <rect x="250" y="314" width="72" height="14" rx="7" fill="#F6E7C1"/>
+  </g>
+
+  <g fill="#F8F3EA">
+    <text x="450" y="225" font-family="Georgia, 'Times New Roman', serif" font-size="82" font-weight="700" letter-spacing="2">KILN GPT</text>
+    <text x="452" y="286" font-family="Georgia, 'Times New Roman', serif" font-size="28" opacity="0.92">Native Claude Code orchestration plugin for disciplined software delivery</text>
+  </g>
+
+  <g fill="#E7D6B1">
+    <text x="452" y="362" font-family="'Courier New', monospace" font-size="24">ONE RUN   •   ONE TEAM   •   THREE MINDS   •   REAL REVIEW   •   REAL VALIDATION</text>
+  </g>
+
+  <g>
+    <rect x="452" y="408" width="284" height="62" rx="31" fill="#B84A1B"/>
+    <text x="494" y="448" font-family="'Courier New', monospace" font-size="24" fill="#FFF7ED">/kiln:fire</text>
+    <rect x="758" y="408" width="308" height="62" rx="31" fill="rgba(246,231,193,0.08)" stroke="#F6E7C1" stroke-width="2"/>
+    <text x="800" y="448" font-family="'Courier New', monospace" font-size="24" fill="#F6E7C1">durable .kiln state</text>
+  </g>
+
+  <g opacity="0.8">
+    <text x="184" y="582" font-family="'Courier New', monospace" font-size="18" fill="#E7D6B1">Kiln remains the voice. GPT is the vessel.</text>
+    <text x="1100" y="582" font-family="'Courier New', monospace" font-size="18" fill="#E7D6B1">Fredasterehub / kiln-gpt</text>
+  </g>
+
+  <defs>
+    <linearGradient id="bg" x1="111" y1="45" x2="1457" y2="611" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827"/>
+      <stop offset="0.5" stop-color="#0F172A"/>
+      <stop offset="1" stop-color="#1C1917"/>
+    </linearGradient>
+    <linearGradient id="ember" x1="176" y1="403" x2="1418" y2="584" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B84A1B"/>
+      <stop offset="0.5" stop-color="#F28C28"/>
+      <stop offset="1" stop-color="#0E7490"/>
+    </linearGradient>
+  </defs>
+</svg>

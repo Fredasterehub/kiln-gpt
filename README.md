@@ -1,107 +1,261 @@
-# Kiln GPT
+<p align="center">
+  <img src="docs/hero.svg" alt="Kiln GPT" width="100%" />
+</p>
 
-Kiln remains the voice.
-GPT is the vessel.
+<p align="center">
+  <strong>Kiln remains the voice. GPT is the vessel.</strong>
+</p>
 
-This repo is the clean rebuild of Kiln as a pure native Claude Code plugin:
-no npm installer, no tmux, no daemon, no protocol injection. Just skills,
-agents, references, and a disciplined runtime contract.
+<p align="center">
+  Native Claude Code plugin for disciplined, multi-stage software delivery.
+</p>
 
-The original v2 proved the product shape. v4 proved the mechanics that matter:
-one team per run, event-driven orchestration, lean control-plane context, and
-living specialist agents that serialize their memory instead of pretending a
-file is a mind.
+<p align="center">
+  <a href="https://github.com/Fredasterehub/kiln-gpt"><img alt="Repo" src="https://img.shields.io/badge/repo-kiln--gpt-B84A1B?style=for-the-badge"></a>
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-D9C7A2?style=for-the-badge"></a>
+  <img alt="Plugin" src="https://img.shields.io/badge/claude%20code-plugin-1F3A5F?style=for-the-badge">
+  <img alt="Status" src="https://img.shields.io/badge/status-contracts%20implemented-2E6F40?style=for-the-badge">
+</p>
 
-The job of this repo is to turn that into a distributable plugin that can be
-copied into Claude Code and trusted to run.
+## What Kiln GPT Is
 
-## Name
+Kiln GPT is a native Claude Code plugin that runs a full delivery workflow with
+deliberate stage gates, persistent internal minds, durable run state, and a
+real fallback path when Codex is unavailable.
 
-The working name is `Kiln GPT`.
-That is good enough to build under, and build quality matters more than naming games.
+It is not a generic swarm.
+It is a constrained build system with memory, stage discipline, and review.
 
-Command names stay on the proven prefix:
+## The Shape
 
-- `/kiln:fire`
-- `/kiln:peek`
-- `/kiln:resume`
-- `/kiln:reset`
-- `/kiln:doctor`
+<table>
+  <tr>
+    <td width="33%">
+      <strong>One Run</strong><br>
+      One durable state machine per project run.
+    </td>
+    <td width="33%">
+      <strong>One Team</strong><br>
+      One Claude team per run, preserved across stages.
+    </td>
+    <td width="33%">
+      <strong>Three Minds</strong><br>
+      Visionary, Architect, and Sentinel hold continuity.
+    </td>
+  </tr>
+</table>
 
-## What Changes In This Rebuild
+```mermaid
+flowchart LR
+    A[/kiln:fire/] --> B[INIT]
+    B --> C{Brownfield?}
+    C -- yes --> D[MAP]
+    C -- no --> E[BRAINSTORM]
+    D --> E
+    E --> F[RESEARCH]
+    F --> G[ARCHITECT]
+    G --> H[BUILD PLAN]
+    H --> I[BUILD EXECUTE]
+    I --> J[BUILD REVIEW]
+    J --> K{More phases?}
+    K -- yes --> H
+    K -- no --> L[VALIDATE]
+    L --> M{Needs correction?}
+    M -- yes --> H
+    M -- no --> N[REPORT]
+    N --> O[COMPLETE]
+```
 
-The original plan had the right ambition but hid several hard problems inside
-`/kiln:fire`. This repo upgrades the design by making those problems explicit:
+## Why This Rebuild Exists
 
-- Runtime control is separated from domain work.
-- GPT/Codex bridging is its own contract, not an implied side effect.
-- Resume, reset, and install diagnostics are first-class commands.
-- Failure handling is designed up front instead of left to "the agents will cope."
-- Run state is durable, namespaced, and restartable.
-- Official Claude Code plugin packaging is treated as a real requirement, not a
-  detail to improvise later.
-- Claude-native fallback is explicit when external bridges are unavailable.
+The older Kiln proved the product shape, but too much critical behavior was
+implicit inside a single command. This rebuild makes the hard parts explicit:
+
+- runtime control is separate from domain work
+- files are durable truth, not decorative memory
+- persistent minds own durable artifacts
+- planning, execution, review, validation, and reporting each have contracts
+- Codex is a first-class accelerator, not a hidden structural dependency
+- Claude-only fallback is real, not marketing
+
+## Command Surface
+
+| Command | Purpose |
+|---|---|
+| `/kiln:fire` | Start, continue, or supervise a run |
+| `/kiln:peek` | Read current run state and next safe point |
+| `/kiln:resume` | Recover a paused, failed, or aborted run |
+| `/kiln:reset` | Archive or clear broken state safely |
+| `/kiln:doctor` | Diagnose plugin, workspace, and bridge readiness |
+
+## End-to-End Workflow
+
+### 1. Control Plane
+
+The main session is the supervisor.
+It inspects `.kiln/`, routes the run, advances the state machine, and keeps the
+ambient context lean.
+
+Core references:
+
+- [`references/fire-control-loop.md`](references/fire-control-loop.md)
+- [`references/run-contract.md`](references/run-contract.md)
+- [`references/runtime-schemas.md`](references/runtime-schemas.md)
+
+### 2. Persistent Minds
+
+Three long-lived internal actors preserve continuity across stages:
+
+- `Visionary`: user value, scope, and acceptance shape
+- `Architect`: system shape, sequencing, and tradeoffs
+- `Sentinel`: quality memory, patterns, and pitfalls
+
+They are internal team members, not operator chat endpoints.
+
+Reference:
+
+- [`references/mind-contracts.md`](references/mind-contracts.md)
+
+### 3. Stage Specialists
+
+Kiln delegates bounded work to stage-specific agents:
+
+- `Da Vinci`: brainstorm facilitation
+- `Mnemosyne`: brownfield mapping
+- `Confucius`, `Sun Tzu`, `Socrates`, `Plato`, `Athena`: planning stack
+- `Scheherazade`, `Workers`, `Sphinx`, `Sherlock`: execution stack
+- `Argus` and tester: validation
+- reporter: final handoff
+
+### 4. Durable Artifacts
+
+Everything important lives under project-local `.kiln/` state:
+
+```text
+.kiln/
+  config.json
+  current-run.txt
+  runs/
+    <run_id>/
+      STATE.md
+      manifest.md
+      events.md
+      docs/
+      tasks/
+      reports/
+```
+
+This is what makes resume and auditability real.
+
+## Session and Team Model
+
+```mermaid
+sequenceDiagram
+    participant O as Operator
+    participant K as Main Kiln Session
+    participant T as Run Team
+    participant M as Persistent Minds
+    participant S as Specialists
+
+    O->>K: /kiln:fire
+    K->>K: Inspect .kiln state
+    K->>T: Attach or create one run team
+    K->>M: Bootstrap Visionary, Architect, Sentinel
+    K->>S: Delegate stage work
+    S-->>K: Return artifacts and gate outcomes
+    M-->>K: Serialize durable knowledge
+    K->>K: Advance state machine
+    K-->>O: Minimal status + next safe point
+```
+
+Rules:
+
+- one team per run
+- one supervisor for lifecycle control
+- one owner per durable artifact
+- resume from files, not guessed chat memory
+
+## Planning, Execution, Validation, Reporting
+
+| Stage | Contract |
+|---|---|
+| Discovery | [`references/brainstorm-contract.md`](references/brainstorm-contract.md) |
+| Brownfield Mapping | [`references/brownfield-mapping-contract.md`](references/brownfield-mapping-contract.md) |
+| Planning | [`references/planning-contract.md`](references/planning-contract.md) |
+| Execution | [`references/execution-contract.md`](references/execution-contract.md) |
+| Review | [`references/review-contract.md`](references/review-contract.md) |
+| Validation | [`references/validation-contract.md`](references/validation-contract.md) |
+| Reporting | [`references/reporting-contract.md`](references/reporting-contract.md) |
+| UX Discipline | [`references/ux-contract.md`](references/ux-contract.md) |
 
 ## Fallback Philosophy
 
-Kiln should run without Codex CLI. It should simply become less sharp.
+Kiln should still run when Codex CLI is missing.
+It should become less sharp, not unusable.
 
-- Best path: Opus 4.6 + Sonnet 4.6 + Codex bridge
-- Fallback path: Opus 4.6 + Sonnet 4.6 only
+- best path: Opus + Sonnet + Codex bridge
+- fallback path: Opus + Sonnet only
 
-The install and diagnostic surfaces should say this plainly:
-Codex CLI is not mandatory, but the implementation loop is materially stronger
-with it installed.
+The bridge contract lives here:
 
-## Plugin Packaging
+- [`skills/kiln-bridge/SKILL.md`](skills/kiln-bridge/SKILL.md)
 
-This repo is targeting the current Claude Code plugin system rather than an
-informal folder copy convention.
+## Repository Map
 
-- Development path: `claude --plugin-dir /path/to/plugin`
-- Marketplace path: `/plugin install <plugin>@<marketplace>`
-- Interactive discovery path: `/plugin > Discover`
+| Path | Purpose |
+|---|---|
+| [`.claude-plugin/plugin.json`](.claude-plugin/plugin.json) | Claude Code plugin manifest |
+| [`skills/`](skills) | User-facing and shared plugin skills |
+| [`agents/`](agents) | Plugin-provided subagents and persistent minds |
+| [`references/`](references) | Runtime contracts, schemas, data, and templates |
+| [`plan/`](plan) | Product plan, architecture, backlog, and operator decisions |
 
-The plugin layout will follow the official structure:
+## Quick Start
 
-```text
-plugin-root/
-  .claude-plugin/plugin.json
-  skills/
-  agents/
-  README.md
+### Validate the plugin
+
+```bash
+claude plugin validate /path/to/kiln-gpt
 ```
 
-## Current Foundation
+### Run it locally in development
 
-This repo is no longer just high-level planning.
-The current foundation now includes concrete native-plugin runtime contracts:
+```bash
+claude --plugin-dir /path/to/kiln-gpt
+```
 
-- [plan/PLAN.md](/DEV/kilngpt/plan/PLAN.md) defines the product and phased build.
-- [plan/ARCHITECTURE.md](/DEV/kilngpt/plan/ARCHITECTURE.md) defines runtime contracts.
-- [plan/MIGRATION.md](/DEV/kilngpt/plan/MIGRATION.md) maps the legacy Kiln workflow to the new native plugin architecture.
-- [plan/NAMING.md](/DEV/kilngpt/plan/NAMING.md) records the short-term naming choice and why I stopped spending time there.
-- [references/run-contract.md](/DEV/kilngpt/references/run-contract.md) defines the durable runtime contract.
-- [references/runtime-schemas.md](/DEV/kilngpt/references/runtime-schemas.md) defines the project-local `.kiln/` schemas and templates.
-- [references/mind-contracts.md](/DEV/kilngpt/references/mind-contracts.md) defines persistent mind ownership, serialization, and consultation rules.
-- [references/planning-contract.md](/DEV/kilngpt/references/planning-contract.md) defines the Stage 2 planning, debate, synthesis, and validation flow.
-- [references/fire-control-loop.md](/DEV/kilngpt/references/fire-control-loop.md) defines the real `kiln-fire` routing and stage-control behavior.
-- [references/brainstorm-contract.md](/DEV/kilngpt/references/brainstorm-contract.md) defines Stage 1 facilitation rules, depth modes, and the `VISION.md` gate.
-- [references/brownfield-mapping-contract.md](/DEV/kilngpt/references/brownfield-mapping-contract.md) defines brownfield scan outputs and seeded-doc behavior.
-- [references/execution-contract.md](/DEV/kilngpt/references/execution-contract.md) defines the Stage 3 phase loop, worker model, reconciliation, and archive rules.
-- [references/review-contract.md](/DEV/kilngpt/references/review-contract.md) defines what Sphinx can reject, how evidence must be recorded, and when review escalates.
-- [references/validation-contract.md](/DEV/kilngpt/references/validation-contract.md) defines local-first validation, browser checks, verdicts, correction re-entry, and credential-readiness artifacts.
-- [references/reporting-contract.md](/DEV/kilngpt/references/reporting-contract.md) defines the final delivery artifact, required inputs, and evidence-backed reporting rules.
-- [references/ux-contract.md](/DEV/kilngpt/references/ux-contract.md) defines minimal ambient status, narrative diagnostics, safe-point interruption handling, and `tmux` as a recommendation only.
-- [skills/kiln-mind/SKILL.md](/DEV/kilngpt/skills/kiln-mind/SKILL.md) implements the persistent mind lifecycle.
-- [skills/kiln-planner/SKILL.md](/DEV/kilngpt/skills/kiln-planner/SKILL.md) implements the planning mechanics behind `kiln-architect`.
-- [skills/kiln-bridge/SKILL.md](/DEV/kilngpt/skills/kiln-bridge/SKILL.md) defines the external bridge contract and fallback posture.
-- [skills/kiln-worker/SKILL.md](/DEV/kilngpt/skills/kiln-worker/SKILL.md) defines bounded task execution for Stage 3 workers.
-- [skills/kiln-validate/SKILL.md](/DEV/kilngpt/skills/kiln-validate/SKILL.md) now encodes local-first validation, browser testing where relevant, and correction-phase generation.
-- [skills/kiln-report/SKILL.md](/DEV/kilngpt/skills/kiln-report/SKILL.md) closes the run with a grounded final handoff artifact.
-- [references/data/brainstorming-techniques.json](/DEV/kilngpt/references/data/brainstorming-techniques.json) and [references/data/elicitation-methods.json](/DEV/kilngpt/references/data/elicitation-methods.json) carry forward the structured brainstorm inputs from legacy Kiln.
+### Then use
 
-The repo still needs live proofs. Stage 1, the control plane, the persistent
-minds, the planning stack, the Stage 3 execution contracts, the Stage 4
-validation contracts, and the Stage 5 reporting surface are now grounded enough
-to keep moving without reopening design churn.
+```text
+/kiln:fire
+/kiln:peek
+/kiln:resume
+/kiln:reset
+/kiln:doctor
+```
+
+## Current Status
+
+The contract surface is implemented across:
+
+- control plane
+- Stage 1 discovery
+- Stage 2 planning
+- Stage 3 execution
+- Stage 4 validation
+- Stage 5 reporting
+- UX/output discipline
+
+What remains is the only thing that counts now: live proof.
+
+Track it here:
+
+- [`plan/IMPLEMENTATION-BACKLOG.md`](plan/IMPLEMENTATION-BACKLOG.md)
+
+## Development Principle
+
+Do not reopen settled operator-experience questions unless the files expose a
+real contradiction.
+
+Build quality first.
+Naming games later.
