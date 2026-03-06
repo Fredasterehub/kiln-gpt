@@ -1,8 +1,6 @@
 # Kiln Codex
 
-> "Perfection is achieved, not when there is nothing more to add, but when there is nothing left to take away."
->
-> Antoine de Saint-Exupery
+> "A forge is where vague ambition goes to lose its excuses."
 
 *An autonomous software foundry for Codex CLI, with Claude as optional philosophical backup and occasional professional heckler.*
 
