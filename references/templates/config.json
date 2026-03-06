@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "project_name": "{{PROJECT_NAME}}",
+  "operator": {
+    "style": "fast-direct",
+    "advanced_controls": false
+  },
+  "defaults": {
+    "brainstorm_depth": "balanced",
+    "debate_rigor": "focused",
+    "gate_profile": "vision-only",
+    "execution_mode": "auto",
+    "validation_posture": "local-first"
+  },
+  "bridges": {
+    "planning_command": null,
+    "codex_command": "codex"
+  },
+  "memory": {
+    "mirror_soft_preferences": true,
+    "last_synced_at": null
+  }
+}
